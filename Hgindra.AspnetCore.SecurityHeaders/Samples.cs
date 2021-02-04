@@ -7,18 +7,22 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         public static void ConfigureSecurity(this IApplicationBuilder app)
         {
             #region X-Frame Options
-            app.SetupXFrameOptions();
+            app.AddXFrameOptionHeader();
 
-            app.SetupXFrameOptions(new XFrameOptionsModel()
+            app.AddXFrameOptionHeader(new XFrameOptionsModel()
             {
-                Value = XFrameOptionsValues.AllowFrom,
-                Url = ""
+                XFrameOption = XFrameOptionsValues.AllowFrom,
+                Url = "your url"
             });
 
-            app.SetupXFrameOptions(new XFrameOptionsModel()
+            app.AddXFrameOptionHeader(new XFrameOptionsModel()
             {
-                Value = XFrameOptionsValues.SameOrigin,
-            }); 
+                XFrameOption = XFrameOptionsValues.SameOrigin,
+            });
+            #endregion
+
+            #region Custom header
+            app.AddCustomHeader("header key", "header value");
             #endregion
         }
     }

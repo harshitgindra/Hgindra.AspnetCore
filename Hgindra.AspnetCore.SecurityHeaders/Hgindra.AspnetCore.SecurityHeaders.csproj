@@ -2,11 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Hgindra.AspnetCore.SecurityHeaders</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Harshit Gindra</Authors>
     <Description>Provides options to add security headers to the request to improve application security and prevent it from hacks and attacks</Description>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Copyright>Harshit Gindra</Copyright>
+    <Version>1.0.1.0</Version>
+    <PackageProjectUrl>https://github.com/harshitgindra/Hgindra.AspnetCore</PackageProjectUrl>
+    <PackOnBuild>true</PackOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
   </ItemGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>C:\Nuget</OutputPath>
+  </PropertyGroup>
 </Project>

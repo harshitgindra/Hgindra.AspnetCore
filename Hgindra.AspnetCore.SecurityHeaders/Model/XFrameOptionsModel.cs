@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Hgindra.AspnetCore.SecurityHeaders
 {
-    public class XFrameOptionsModel
+    public class XFrameOptionsModel : BaseModel
     {
         /// <summary>
         /// Defines the parameters for the X-Frame-Options header with the 'deny' option set
@@ -21,15 +21,14 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// required and must have sited that are permitted to frame your site.
         /// Note: Chrome does not support the ALLOW-FROM option
         /// Null by default</param>
-        public XFrameOptionsModel(XFrameOptionsValues value, string url = null)
+        public XFrameOptionsModel(XFrameOptionsValues xFrameOption, string url = null)
         {
-            Value = value;
-
-            if (value == XFrameOptionsValues.AllowFrom && string.IsNullOrWhiteSpace(url))
+            if (xFrameOption == XFrameOptionsValues.AllowFrom && string.IsNullOrWhiteSpace(url))
             {
                 throw new ArgumentException("ALLOW-FROM URL string cannot be empty when ALLOW-FROM option is selected.");
             }
 
+            XFrameOption = xFrameOption;
             Url = url;
         }
 
@@ -38,13 +37,36 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// DENY is set by default.
         /// Note: Chrome does not support the ALLOW-FROM option
         /// </summary>
-        public XFrameOptionsValues Value { get; set; }
+        public XFrameOptionsValues XFrameOption { get; set; }
 
         /// <summary>
         /// Gets the url allowed from a single domain.
         /// Note: Chrome does not support the ALLOW-FROM option
         /// </summary>
         public string Url { get; set; }
+
+        public override string Value
+        {
+            get
+            {
+                if (this.XFrameOption == XFrameOptionsValues.AllowFrom)
+                {
+                    return $"{XFrameOption.DefaultValue()} {this.Url}";
+                }
+
+                return XFrameOption.DefaultValue();
+
+            }
+            set => base.Value = value;
+        }
+
+        public override string Key
+        {
+            get
+            {
+                return "X-Frame-Options";
+            }
+        }
     }
 
     public enum XFrameOptionsValues

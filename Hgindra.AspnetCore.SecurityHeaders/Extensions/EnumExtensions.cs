@@ -11,7 +11,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// </summary>
         /// <param name="enumValue">Any Enum where DefaultValue attribute is defined.</param>
         /// <returns></returns>
-        internal static string DefaultValue(this Enum enumValue)
+        public static string DefaultValue(this Enum enumValue)
         {
             var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
 

@@ -7,8 +7,8 @@ namespace Hgindra.AspnetCore.SecurityHeaders
     {
         public XFrameOptionsMiddleware(RequestDelegate next, IOptions<XFrameOptionsModel> options): base(next)
         {
-            HeaderKey = "X-Frame-Options";
-            HeaderValue = options.Value.ToString();
+            Key = "X-Frame-Options";
+            Value = options.Value.Value;
         }
     }
 }
