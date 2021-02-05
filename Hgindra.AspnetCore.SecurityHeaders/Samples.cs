@@ -80,6 +80,15 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             app.AddPermittedCrossDomainPolicyHeader(PermittedCrossDomainPolicy.All);
             #endregion
 
+            #region Feature policy header
+            app.AddFeaturePolicyHeader();
+
+            app.AddFeaturePolicyHeader(new FeaturePolicy()
+            {
+                AllowMicrophone = true
+            });
+            #endregion
+
             #region Custom header
             app.AddCustomHeader("header key", "header value");
             #endregion

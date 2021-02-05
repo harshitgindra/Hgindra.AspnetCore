@@ -59,44 +59,24 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
-        /// Adds Referrer policy to the headers
+        /// Add Referrer policy options to the header
         /// This method will add header 'Referrer-Policy', 'no-referrer'
         /// </summary>
         /// <param name="app"></param>
-        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app)
+        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app, ReferrerPolicyModel model = null)
         {
-            app.UseMiddleware<XssProtectionMiddleware>();
-            return app;
-        }
-
-        /// <summary>
-        /// Add Referrer policy options to the header
-        /// </summary>
-        /// <param name="app"></param>
-        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app, ReferrerPolicyModel model)
-        {
-            app.UseMiddleware<XssProtectionMiddleware>(new OptionsWrapper<ReferrerPolicyModel>(model));
+            app.UseMiddleware<ReferrerPolicyMiddleware>(new OptionsWrapper<ReferrerPolicyModel>(model ?? new ReferrerPolicyModel()));
             return app;
         }
 
         /// <summary>
         /// Adds Strict transport security to the headers
-        /// This method will add header 'Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload'
+        /// This method will add header 'Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload' by default
         /// </summary>
         /// <param name="app"></param>
-        public static IApplicationBuilder AddStrictTransportSecurityHeader(this IApplicationBuilder app)
+        public static IApplicationBuilder AddStrictTransportSecurityHeader(this IApplicationBuilder app, StrictTransportSecurity model = null)
         {
-            app.UseMiddleware<XssProtectionMiddleware>();
-            return app;
-        }
-
-        /// <summary>
-        /// Adds Strict transport security to the headers
-        /// </summary>
-        /// <param name="app"></param>
-        public static IApplicationBuilder AddStrictTransportSecurityHeader(this IApplicationBuilder app, StrictTransportSecurity model)
-        {
-            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<StrictTransportSecurity>(model));
+            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<StrictTransportSecurity>(model ?? new StrictTransportSecurity()));
             return app;
         }
 
@@ -119,7 +99,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// <param name="permittedCrossDomainPolicy">Permitted Cross Domain Policies</param>
         public static IApplicationBuilder AddPermittedCrossDomainPolicyHeader(this IApplicationBuilder app, PermittedCrossDomainPolicy permittedCrossDomainPolicy = PermittedCrossDomainPolicy.None)
         {
-            app.UseMiddleware<ContentTypeOptionsMiddleware>(new OptionsWrapper<CustomHeaderModel>(new CustomHeaderModel(string.Empty, permittedCrossDomainPolicy.DefaultValue())));
+            app.UseMiddleware<PermittedCrossDomainPoliciesMiddleware>(new OptionsWrapper<CustomHeaderModel>(new CustomHeaderModel(string.Empty, permittedCrossDomainPolicy.DefaultValue())));
             return app;
         }
 
@@ -132,7 +112,20 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// <param name="model">Expect Certificate Transparency details</param>
         public static IApplicationBuilder AddExpectCertificateTransparencyHeader(this IApplicationBuilder app, ExpectCertificateTransparency model = null)
         {
-            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<ExpectCertificateTransparency>(model ?? new ExpectCertificateTransparency()));
+            app.UseMiddleware<ExpectCertificateTransparencyMiddleware>(new OptionsWrapper<ExpectCertificateTransparency>(model ?? new ExpectCertificateTransparency()));
+            return app;
+        }
+
+
+        /// <summary>
+        /// Control browser’s features such as geolocation, fullscreen, speaker, USB, autoplay, speaker, vibrate, microphone, payment, vr, etc. to enable or disable within a web application.
+        /// Eg. This method will add header 'Feature-Policy', 'fullscreen 'none'; microphone 'none''
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="model">Expect Certificate Transparency details</param>
+        public static IApplicationBuilder AddFeaturePolicyHeader(this IApplicationBuilder app, FeaturePolicy model = null)
+        {
+            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<FeaturePolicy>(model ?? new FeaturePolicy()));
             return app;
         }
     }
