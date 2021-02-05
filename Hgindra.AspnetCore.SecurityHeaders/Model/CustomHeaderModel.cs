@@ -6,10 +6,8 @@
         {
         }
 
-        public CustomHeaderModel(string key, string value)
+        public CustomHeaderModel(string key, string value): base(key, value)
         {
-            this.Key = key;
-            this.Value = value ?? string.Empty;
         }
     }
 }

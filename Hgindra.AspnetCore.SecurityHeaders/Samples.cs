@@ -21,6 +21,22 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             });
             #endregion
 
+            #region XSS Protection
+            app.AddXssProtectionHeader();
+
+            app.AddXssProtectionHeader(new XssProtectionModel()
+            {
+                Block = true,
+                EnableXssFiltering = true,
+            });
+
+            app.AddXssProtectionHeader(new XssProtectionModel()
+            {
+                ReportUri = "",
+                EnableXssFiltering = true,
+            });
+            #endregion
+
             #region Content type options 
             app.AddContentTypeOptionHeader();
             #endregion

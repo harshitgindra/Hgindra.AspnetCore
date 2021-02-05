@@ -27,13 +27,34 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
-        /// Add content type options to the headers
+        /// Adds content type options to the headers
         /// This method will add header 'X-Content-Type-Options', 'nosniff'
         /// </summary>
         /// <param name="app"></param>
         public static IApplicationBuilder AddContentTypeOptionHeader(this IApplicationBuilder app)
         {
             app.UseMiddleware<ContentTypeOptionsMiddleware>();
+            return app;
+        }
+
+        /// <summary>
+        /// Adds XSS Protection to the headers
+        /// This method will add header 'X-Xss-Protection', '0'
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddXssProtectionHeader(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<XssProtectionMiddleware>();
+            return app;
+        }
+
+        /// <summary>
+        /// Add XSS Protection security options to the header
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddXssProtectionHeader(this IApplicationBuilder app, XssProtectionModel model)
+        {
+            app.UseMiddleware<XssProtectionMiddleware>(new OptionsWrapper<XssProtectionModel>(model));
             return app;
         }
 

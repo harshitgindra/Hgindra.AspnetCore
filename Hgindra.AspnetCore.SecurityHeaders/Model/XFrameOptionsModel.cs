@@ -57,7 +57,6 @@ namespace Hgindra.AspnetCore.SecurityHeaders
                 return XFrameOption.DefaultValue();
 
             }
-            set => base.Value = value;
         }
 
         public override string Key
