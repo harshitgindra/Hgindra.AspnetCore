@@ -80,6 +80,27 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
+        /// Adds Strict transport security to the headers
+        /// This method will add header 'Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload'
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddStrictTransportSecurityHeader(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<XssProtectionMiddleware>();
+            return app;
+        }
+
+        /// <summary>
+        /// Adds Strict transport security to the headers
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddStrictTransportSecurityHeader(this IApplicationBuilder app, StrictTransportSecurity model)
+        {
+            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<StrictTransportSecurity>(model));
+            return app;
+        }
+
+        /// <summary>
         /// Add custom header
         /// </summary>
         /// <param name="app"></param>

@@ -31,6 +31,18 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
             #endregion
 
+            #region Strict transport security
+            app.AddStrictTransportSecurityHeader();
+
+            app.AddStrictTransportSecurityHeader(new StrictTransportSecurity()
+            {
+                MaxAge = 1,
+                IncludeSubDomains = true,
+                Preload = true
+            });
+
+            #endregion
+
             #region XSS Protection
             app.AddXssProtectionHeader();
 
