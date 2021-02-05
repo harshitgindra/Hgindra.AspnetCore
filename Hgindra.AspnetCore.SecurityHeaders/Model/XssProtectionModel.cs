@@ -29,7 +29,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// </summary>
         public string ReportUri { get; set; }
 
-        public override string Value
+        internal override string Value
         {
             get
             {

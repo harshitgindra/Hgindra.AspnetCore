@@ -59,6 +59,27 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
+        /// Adds Referrer policy to the headers
+        /// This method will add header 'Referrer-Policy', 'no-referrer'
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<XssProtectionMiddleware>();
+            return app;
+        }
+
+        /// <summary>
+        /// Add Referrer policy options to the header
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app, ReferrerPolicyModel model)
+        {
+            app.UseMiddleware<XssProtectionMiddleware>(new OptionsWrapper<ReferrerPolicyModel>(model));
+            return app;
+        }
+
+        /// <summary>
         /// Add custom header
         /// </summary>
         /// <param name="app"></param>

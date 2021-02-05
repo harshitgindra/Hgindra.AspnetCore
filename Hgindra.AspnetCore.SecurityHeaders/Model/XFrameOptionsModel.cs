@@ -45,7 +45,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// </summary>
         public string Url { get; set; }
 
-        public override string Value
+        internal override string Value
         {
             get
             {
@@ -56,14 +56,6 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
                 return XFrameOption.DefaultValue();
 
-            }
-        }
-
-        public override string Key
-        {
-            get
-            {
-                return "X-Frame-Options";
             }
         }
     }

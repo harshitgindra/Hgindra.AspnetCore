@@ -21,6 +21,16 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             });
             #endregion
 
+            #region Referrer Policies
+            app.AddReferrerPolicyHeader();
+
+            app.AddReferrerPolicyHeader(new ReferrerPolicyModel()
+            {
+                ReferrerPolicy = ReferrerPolicy.NoReferrerWhenDowngrade
+            });
+
+            #endregion
+
             #region XSS Protection
             app.AddXssProtectionHeader();
 

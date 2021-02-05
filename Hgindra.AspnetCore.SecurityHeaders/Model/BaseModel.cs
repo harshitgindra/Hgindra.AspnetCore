@@ -2,12 +2,12 @@
 {
     public class BaseModel
     {
-        public BaseModel()
+        internal BaseModel()
         {
 
         }
 
-        public BaseModel(string key, string value)
+        protected BaseModel(string key, string value)
         {
             this.Key = key;
             this.Value = value ?? string.Empty;
@@ -16,11 +16,11 @@
         /// <summary>
         /// Header key
         /// </summary>
-        public virtual string Key { get; }
+        internal virtual string Key { get; }
 
         /// <summary>
         /// Header value
         /// </summary>
-        public virtual string Value { get; }
+        internal virtual string Value { get; }
     }
 }
