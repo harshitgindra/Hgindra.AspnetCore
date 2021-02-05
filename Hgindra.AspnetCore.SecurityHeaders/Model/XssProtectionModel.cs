@@ -34,7 +34,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         {
             get
             {
-                if (!string.IsNullOrEmpty(this.ReportUri) && string.IsNullOrWhiteSpace(this.ReportUri))
+                if (!string.IsNullOrEmpty(this.ReportUri) && !string.IsNullOrWhiteSpace(this.ReportUri))
                 {
                     return $"1; report={this.ReportUri.Trim()}";
                 }

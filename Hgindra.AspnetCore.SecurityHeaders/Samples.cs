@@ -63,6 +63,17 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             app.AddContentTypeOptionHeader();
             #endregion
 
+            #region Expect certificate transparency 
+            app.AddExpectCertificateTransparencyHeader();
+
+            app.AddExpectCertificateTransparencyHeader(new ExpectCertificateTransparency()
+            {
+                MaxAge = 10,
+                Enforce = true,
+                ReportUrl = "abc.com"
+            });
+            #endregion
+
             #region Permitted cross domain policy header 
             app.AddPermittedCrossDomainPolicyHeader();
 

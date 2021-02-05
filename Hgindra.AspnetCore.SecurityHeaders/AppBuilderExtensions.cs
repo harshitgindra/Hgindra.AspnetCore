@@ -122,5 +122,18 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             app.UseMiddleware<ContentTypeOptionsMiddleware>(new OptionsWrapper<CustomHeaderModel>(new CustomHeaderModel(string.Empty, permittedCrossDomainPolicy.DefaultValue())));
             return app;
         }
+
+
+        /// <summary>
+        /// This header instruct the browser to validate the connection with web servers for certificate transparency (CT)
+        /// This method will add header 'Expect-CT', 'enforce, max-age=43200' by default
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="model">Expect Certificate Transparency details</param>
+        public static IApplicationBuilder AddExpectCertificateTransparencyHeader(this IApplicationBuilder app, ExpectCertificateTransparency model = null)
+        {
+            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<ExpectCertificateTransparency>(model ?? new ExpectCertificateTransparency()));
+            return app;
+        }
     }
 }
