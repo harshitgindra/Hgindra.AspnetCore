@@ -26,6 +26,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
         /// <summary>
         /// Enables XSS filtering. If a cross-site scripting attack is detected, the browser will sanitize the page and report the violation. This uses the functionality of the CSP report-uri directive to send a report.
+        /// Eg. http://example.com/report_URI
         /// </summary>
         public string ReportUri { get; set; }
 

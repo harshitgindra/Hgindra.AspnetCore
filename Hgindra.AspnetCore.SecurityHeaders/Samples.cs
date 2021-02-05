@@ -63,6 +63,12 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             app.AddContentTypeOptionHeader();
             #endregion
 
+            #region Permitted cross domain policy header 
+            app.AddPermittedCrossDomainPolicyHeader();
+
+            app.AddPermittedCrossDomainPolicyHeader(PermittedCrossDomainPolicy.All);
+            #endregion
+
             #region Custom header
             app.AddCustomHeader("header key", "header value");
             #endregion

@@ -63,10 +63,15 @@ namespace Hgindra.AspnetCore.SecurityHeaders
     public enum XFrameOptionsValues
     {
         [DefaultValue("DENY")]
+        [Description("Prevent any domain to embed your content using frame/iframe.")]
         Deny = 0,
+
         [DefaultValue("SAMEORIGIN")]
+        [Description("Frame/iframe of content is only allowed from the same site origin.")]
         SameOrigin = 1,
+
         [DefaultValue("ALLOW-FROM")]
+        [Description("Allow framing the content only on a particular URI.")]
         AllowFrom = 2
     }
 }

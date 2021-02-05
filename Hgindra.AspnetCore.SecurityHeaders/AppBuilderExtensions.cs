@@ -27,7 +27,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
-        /// Adds content type options to the headers
+        /// Prevent MIME types of security risk by adding this header to your web page’s HTTP response. Having this header instructs browser to consider file types as defined and disallow content sniffing.
         /// This method will add header 'X-Content-Type-Options', 'nosniff'
         /// </summary>
         /// <param name="app"></param>
@@ -108,6 +108,18 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         public static IApplicationBuilder AddCustomHeader(this IApplicationBuilder app, string key, string value)
         {
             app.UseMiddleware<CustomHeaderMiddleware>(new OptionsWrapper<CustomHeaderModel>(new CustomHeaderModel(key, value)));
+            return app;
+        }
+
+        /// <summary>
+        /// It instruct the browser how to handle the requests over a cross-domain. By implementing this header, you restrict loading your site’s assets from other domains to avoid resource abuse
+        /// By default This method will add header 'X-Permitted-Cross-Domain-Policies', 'none'
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="permittedCrossDomainPolicy">Permitted Cross Domain Policies</param>
+        public static IApplicationBuilder AddPermittedCrossDomainPolicyHeader(this IApplicationBuilder app, PermittedCrossDomainPolicy permittedCrossDomainPolicy = PermittedCrossDomainPolicy.None)
+        {
+            app.UseMiddleware<ContentTypeOptionsMiddleware>(new OptionsWrapper<CustomHeaderModel>(new CustomHeaderModel(string.Empty, permittedCrossDomainPolicy.DefaultValue())));
             return app;
         }
     }
