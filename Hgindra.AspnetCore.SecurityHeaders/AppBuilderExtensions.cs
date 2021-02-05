@@ -27,6 +27,17 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         }
 
         /// <summary>
+        /// Add content type options to the headers
+        /// This method will add header 'X-Content-Type-Options', 'nosniff'
+        /// </summary>
+        /// <param name="app"></param>
+        public static IApplicationBuilder AddContentTypeOptionHeader(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ContentTypeOptionsMiddleware>();
+            return app;
+        }
+
+        /// <summary>
         /// Add custom header
         /// </summary>
         /// <param name="app"></param>

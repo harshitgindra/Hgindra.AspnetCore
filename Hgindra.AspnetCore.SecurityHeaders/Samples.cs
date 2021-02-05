@@ -21,6 +21,10 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             });
             #endregion
 
+            #region Content type options 
+            app.AddContentTypeOptionHeader();
+            #endregion
+
             #region Custom header
             app.AddCustomHeader("header key", "header value");
             #endregion
