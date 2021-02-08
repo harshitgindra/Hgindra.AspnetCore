@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace Hgindra.AspnetCore.SecurityHeaders
 {
@@ -60,12 +61,12 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
         /// <summary>
         /// Add Referrer policy options to the header
-        /// This method will add header 'Referrer-Policy', 'no-referrer'
+        /// By default This method will add header 'Referrer-Policy', 'no-referrer'
         /// </summary>
-        /// <param name="app"></param>
-        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app, ReferrerPolicyModel model = null)
+        /// <param name="policy">Referrer policy, default set to no-referrer</param>
+        public static IApplicationBuilder AddReferrerPolicyHeader(this IApplicationBuilder app, ReferrerPolicy policy = ReferrerPolicy.NoReferrer)
         {
-            app.UseMiddleware<ReferrerPolicyMiddleware>(new OptionsWrapper<ReferrerPolicyModel>(model ?? new ReferrerPolicyModel()));
+            app.UseMiddleware<ReferrerPolicyMiddleware>(new OptionsWrapper<ReferrerPolicyModel>(new ReferrerPolicyModel(policy)));
             return app;
         }
 
@@ -123,9 +124,41 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// </summary>
         /// <param name="app"></param>
         /// <param name="model">Expect Certificate Transparency details</param>
-        public static IApplicationBuilder AddFeaturePolicyHeader(this IApplicationBuilder app, FeaturePolicy model = null)
+        public static IApplicationBuilder AddFeaturePolicyHeader(this IApplicationBuilder app, FeaturePolicy model)
         {
-            app.UseMiddleware<StrictTransportSecurityMiddleware>(new OptionsWrapper<FeaturePolicy>(model ?? new FeaturePolicy()));
+            app.UseMiddleware<FeaturePolicyMiddleware>(new OptionsWrapper<FeaturePolicy>(model ?? new FeaturePolicy()));
+            return app;
+        }
+
+        /// <summary>
+        /// Control browser’s features such as geolocation, fullscreen, speaker, USB, autoplay, speaker, vibrate, microphone, payment, vr, etc. to enable or disable within a web application.
+        /// Eg. This method will add header 'Feature-Policy', 'fullscreen 'none'; microphone 'none''
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="model">Expect Certificate Transparency details</param>
+        public static IApplicationBuilder AddFeaturePolicyHeader(this IApplicationBuilder app, Action<FeaturePolicyDecorator> model = null)
+        {
+            var builder = new FeaturePolicyDecorator();
+            if (model != null)
+            {
+                model(builder);
+            }
+
+            app.UseMiddleware<FeaturePolicyMiddleware>(new OptionsWrapper<FeaturePolicy>(builder.FeaturePolicy));
+            return app;
+        }
+
+        /// <summary>
+        /// The HTTP Content-Security-Policy response header allows web site administrators to control resources the user agent is allowed to load for a given page. With a few exceptions, policies mostly involve specifying server origins and script endpoints. This helps guard against cross-site scripting attacks (XSS).
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="model">Expect Certificate Transparency details</param>
+        public static IApplicationBuilder AddContentSecurityPolicyHeader(this IApplicationBuilder app, Action<ContentSecurityPolicyDecorator> model = null)
+        {
+            var builder = new ContentSecurityPolicyDecorator();
+            model?.Invoke(builder);
+
+            app.UseMiddleware<ContentSecurityPolicyMiddleware>(new OptionsWrapper<ContentSecurityPolicy>(builder.Policy));
             return app;
         }
     }

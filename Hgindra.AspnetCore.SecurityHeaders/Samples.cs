@@ -24,10 +24,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             #region Referrer Policies
             app.AddReferrerPolicyHeader();
 
-            app.AddReferrerPolicyHeader(new ReferrerPolicyModel()
-            {
-                ReferrerPolicy = ReferrerPolicy.NoReferrerWhenDowngrade
-            });
+            app.AddReferrerPolicyHeader(ReferrerPolicy.NoReferrerWhenDowngrade);
 
             #endregion
 
@@ -81,16 +78,40 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             #endregion
 
             #region Feature policy header
-            app.AddFeaturePolicyHeader();
+            //app.AddFeaturePolicyHeader(null);
 
             app.AddFeaturePolicyHeader(new FeaturePolicy()
             {
                 AllowMicrophone = true
             });
+
+            app.AddFeaturePolicyHeader(x => x.AllowGeolocation());
             #endregion
 
             #region Custom header
             app.AddCustomHeader("header key", "header value");
+            #endregion
+
+            #region Content Security Policy
+            app.AddContentSecurityPolicyHeader(x =>
+                 {
+                     x.AddScripts()
+                     .AllowInline()
+                     .AllowSelf();
+
+                     x.AddAlways();
+
+                     x.AddFrames().DenyAll();
+                     x.AddImages().DenyAll();
+                     x.AddMedia().DenyAll();
+
+                     x.AddStylesheets()
+                     .AllowInline()
+                     .AllowSelf();
+
+                     x.AddConnect()
+                     .AllowSelf();
+                 }); 
             #endregion
         }
     }
