@@ -50,7 +50,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
                 if (MaxAge != 0)
                 {
-                    returnValue.Add($"maxage={MaxAge}");
+                    returnValue.Add($"max-age={MaxAge}");
                 }
 
                 if (IncludeSubDomains)

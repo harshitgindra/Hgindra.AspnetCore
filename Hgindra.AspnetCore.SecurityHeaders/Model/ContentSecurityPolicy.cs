@@ -56,7 +56,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         {
             get
             {
-                string str = $"\" ";
+                string str = $"";
 
                 str += Convert(Default, "default-src");
 
@@ -74,7 +74,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
                 str += Convert(Media, "media-src");
 
-                str += $"\" ";
+                str += $" ";
                 if (this.AddAlways)
                 {
                     str += "always;";
