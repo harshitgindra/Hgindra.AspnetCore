@@ -7,7 +7,8 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 *** reference: https://github.com/othneildrew/Best-README-Template/edit/master/README.md
 -->
-[![MIT License][license-shield]][license-url]
+
+[![LinkedIn][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- TABLE OF CONTENTS -->
@@ -38,6 +39,8 @@ There are several security problems that our web application can face when our a
 * Allows a registered air conditioning unit to log its sensor readings
 * Allows an system user to keep track of the readings and get notified if any device readings are beyond the safety benchmark so that appropriate actions can be taken on time
 
+I found this amazing [article](https://blog.elmah.io/the-asp-net-core-security-headers-guide/) that talks about the security headers in ASP.NET Core. You can refer to this article to understand better
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -66,6 +69,32 @@ app.AddReferrerPolicyHeader(ReferrerPolicy.NoReferrerWhenDowngrade);
 
 ```
 There are different referrer policy options available to choose from.
+
+#### Another example to add Content Security Policy Headers
+
+```
+            app.AddContentSecurityPolicyHeader(x =>
+                 {
+                     x.AddScripts()
+                     .AllowInline()
+                     .AllowSelf();
+
+                     x.AddAlways();
+
+                     x.AddFrames().DenyAll();
+                     x.AddImages().DenyAll();
+                     x.AddMedia().DenyAll();
+
+                     x.AddStylesheets()
+                     .AllowInline()
+                     .AllowSelf();
+
+                     x.AddConnect()
+                     .AllowSelf();
+                 }); 
+```
+
+
 
 #### You can refer to `samples.cs` file for complete list of extension methods and its descriptions.
 
@@ -115,7 +144,7 @@ Project Link: [Hgindra.AspnetCore.SecurityHeaders](https://github.com/harshitgin
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 
-[license-shield]: (https://img.shields.io/github/license/harshitgindra/Hgindra.AspnetCore?style=flat-square)
+[license-shield]: https://img.shields.io/github/license/harshitgindra/Hgindra.AspnetCore?style=flat-square
 [license-url]: https://github.com/harshitgindra/Hgindra.AspnetCore/blob/main/LICENSE
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
