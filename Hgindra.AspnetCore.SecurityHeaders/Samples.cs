@@ -77,15 +77,10 @@ namespace Hgindra.AspnetCore.SecurityHeaders
             app.AddPermittedCrossDomainPolicyHeader(PermittedCrossDomainPolicy.All);
             #endregion
 
-            #region Feature policy header
-            //app.AddFeaturePolicyHeader(null);
+            #region Permissions policy header
 
-            app.AddFeaturePolicyHeader(new FeaturePolicy()
-            {
-                AllowMicrophone = true
-            });
+            app.AddPermissionPolicyHeader(x => x.ConfigureCamera().AllowSelf());
 
-            app.AddFeaturePolicyHeader(x => x.AllowGeolocation());
             #endregion
 
             #region Custom header
@@ -111,7 +106,11 @@ namespace Hgindra.AspnetCore.SecurityHeaders
 
                      x.AddConnect()
                      .AllowSelf();
-                 }); 
+                 });
+            #endregion
+
+            #region X-Powered By
+            app.AddPoweredByHeader(x => x.SetValue("").Remove());
             #endregion
         }
     }

@@ -21,6 +21,6 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>C:\Nuget</OutputPath>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 </Project>

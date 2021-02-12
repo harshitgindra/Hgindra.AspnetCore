@@ -10,6 +10,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         protected string Key { get; set; }
         protected string Value { get; set; }
         protected RequestDelegate Next { get; }
+        protected bool RemoveKey { get; set; }
 
         public BaseMiddleware(RequestDelegate next)
         {
@@ -26,10 +27,31 @@ namespace Hgindra.AspnetCore.SecurityHeaders
                 throw new ArgumentNullException("Header key is requied");
             }
 
-            if (!ContainsKey(context.Response))
+            //***
+            //*** Check if key already exists and remove key flag is set to false
+            //***
+            if (!ContainsKey(context.Response) && !RemoveKey)
             {
                 context.Response.Headers.Add(Key.Trim(), Value?.Trim() ?? string.Empty);
             }
+            else
+            {
+                if (RemoveKey)
+                {
+                    //***
+                    //*** Remove the key
+                    //***
+                    context.Response.Headers.Remove(Key.Trim());
+                }
+                else
+                {
+                    //***
+                    //*** Key already exists, replace the value
+                    //***
+                    context.Response.Headers[Key.Trim()] = Value?.Trim() ?? string.Empty;
+                }
+            }
+
             await Next(context);
         }
 

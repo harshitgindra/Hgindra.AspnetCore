@@ -16,7 +16,7 @@ namespace Hgindra.AspnetCore.SecurityHeaders
         /// <summary>
         /// Defines the parameters for the X-Frame-Options header sent in response to clients
         /// </summary>
-        /// <param name="value">The Value to be applied to the header X-Frame-Options header</param>
+        /// <param name="xFrameOption">x-frame options</param>
         /// <param name="url">If ALLOW-FROM is selected, then this value is
         /// required and must have sited that are permitted to frame your site.
         /// Note: Chrome does not support the ALLOW-FROM option

@@ -22,5 +22,10 @@
         /// Header value
         /// </summary>
         internal virtual string Value { get; }
+
+        /// <summary>
+        /// specifies if the key needs to be removed
+        /// </summary>
+        internal virtual bool Remove { get; set; }
     }
 }
