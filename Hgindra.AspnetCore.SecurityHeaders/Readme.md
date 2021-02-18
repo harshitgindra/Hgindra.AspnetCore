@@ -10,6 +10,7 @@
 
 [![LinkedIn][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Nuget](https://img.shields.io/nuget/v/Hgindra.AspnetCore.SecurityHeaders)](https://www.nuget.org/packages/Hgindra.AspnetCore.SecurityHeaders/)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
